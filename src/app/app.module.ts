@@ -17,6 +17,11 @@ import { MenuComponent } from './restaurants-detail/menu/menu.component';
 import { MenuItemComponent } from './restaurants-detail/menu-item/menu-item.component';
 import { ShoppingCartComponent } from './restaurants-detail/shopping-cart/shopping-cart.component';
 import { ReviewsComponent } from './restaurants-detail/reviews/reviews.component';
+import {ShoppingCartService} from './restaurants-detail/shopping-cart/shopping-cart.service';
+import { OrderComponent } from './order/order.component';
+import {FormsModule} from '@angular/forms';
+import { InputComponent } from './shared/input/input.component';
+import { RadioComponent } from './shared/radio/radio.component';
 
 
 @NgModule({
@@ -31,14 +36,18 @@ import { ReviewsComponent } from './restaurants-detail/reviews/reviews.component
     MenuComponent,
     MenuItemComponent,
     ShoppingCartComponent,
-    ReviewsComponent
+    ReviewsComponent,
+    OrderComponent,
+    InputComponent,
+    RadioComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    FormsModule
   ],
-  providers: [RestaurantsService],
+  providers: [RestaurantsService, ShoppingCartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
