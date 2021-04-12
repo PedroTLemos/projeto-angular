@@ -4,10 +4,8 @@
 
 <section class="content">
   <section class="invoice">
-    {{form.valid | json}}
-    {{form.value | json}}
 
-    <form #form="ngForm" novalidate>
+    <form [formGroup]="orderForm" novalidate>
       <div class="row">
         <div class="col-xs-12">
           <h2 class="page-header">
@@ -16,23 +14,47 @@
         </div>
       </div>
 
-      <div class="row invoice-info">
+      <div class="row">
+        <div class="col-xs-12 col-sm-9">
+          <p class="lead">Seus Dados:</p>
+        </div>
+        <div class="col-xs-12 col-sm-3">
+          <span class="help-block pull-right has-error-block" *ngIf="orderForm.hasError('emailsNotMatch')"><i class="fa fa-remove"></i>E-mails diferentes!</span>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+          <mt-input-container errorMessage=" Nome inválido!" label="Nome">
+            <input class="form-control" formControlName="name" placeholder="Nome" autocomplete="off">
+          </mt-input-container>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <mt-input-container errorMessage=" E-mail inválido!" label="E-mail">
+            <input class="form-control" formControlName="email"  placeholder="E-mail" autocomplete="off">
+          </mt-input-container>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <mt-input-container errorMessage=" E-mail inválido!" label="Confirmar E-mail">
+            <input class="form-control" formControlName="emailConfirmation" placeholder="Confirmar E-mail" autocomplete="off">
+          </mt-input-container>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-xs-12">
           <p class="lead">Endereço de Entrega:</p>
         </div>
         <div class="col-sm-6 col-xs-12">
           <mt-input-container errorMessage=" Endereço inválido!" label="Endereço">
-            <input class="form-control" name="address" ngModel placeholder="Endereço" required minlength="5" autocomplete="off">
+            <input class="form-control" formControlName="address" placeholder="Endereço" autocomplete="off">
           </mt-input-container>
         </div>
         <div class="col-sm-2 col-xs-6">
           <mt-input-container errorMessage=" Número inválido!" label="Número">
-            <input class="form-control" name="number" ngModel pattern="^[0-9]*$" placeholder="Número" required autocomplete="off">
+            <input class="form-control" formControlName="number" placeholder="Número" autocomplete="off">
           </mt-input-container>
         </div>
         <div class="col-sm-4 col-xs-6">
           <mt-input-container errorMessage="" label="Complemento">
-            <input class="form-control" name="optional" ngModel placeholder="Complemento" autocomplete="off">
+            <input class="form-control" formControlName="optionalAddress" placeholder="Complemento" autocomplete="off">
           </mt-input-container>
 
         </div>
@@ -61,7 +83,7 @@
           <p class="lead">Formas de Pagamento:</p>
 
           <div class="form-group">
-            <mt-radio [options]="paymentOptions" name="paymentOption" ngModel></mt-radio>
+            <mt-radio [options]="paymentOptions" formControlName="paymentOption"></mt-radio>
           </div>
 
         </div>
@@ -69,22 +91,7 @@
         <div class="col-sm-6 col-xs-12">
           <p class="lead">Frete e Total:</p>
 
-          <div class="table-responsive">
-            <table class="table">
-              <tbody><tr>
-                <th style="width:50%">Itens:</th>
-                <td class="text-right">R$ 20,00</td>
-              </tr>
-              <tr>
-                <th>Frete:</th>
-                <td class="text-right">R$ 8,00</td>
-              </tr>
-              <tr>
-                <th>Total:</th>
-                <td class="text-right">R$ 28,00</td>
-              </tr>
-              </tbody></table>
-          </div>
+          <mt-delivery-costs [delivery]="delivery" [itemsValue]="itemsValue()"></mt-delivery-costs>
         </div>
         <!-- /.col -->
       </div>
@@ -93,8 +100,9 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <a href="order-summary.html" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Concluir Pedido
-        </a>
+        <button (click)="checkOrder(orderForm.value)" href="order-summary.html" class="btn btn-success pull-right"
+                [disabled] = "!orderForm.valid || cartItems().length === 0" ><i class="fa fa-credit-card"></i> Concluir Pedido
+        </button>
       </div>
     </div>
 

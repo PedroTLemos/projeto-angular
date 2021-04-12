@@ -8,7 +8,6 @@ import {ROUTES} from './app.routes';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
 import { RestaurantsComponent } from './restaurants/restaurants.component';
 import { RestaurantComponent } from './restaurants/restaurant/restaurant.component';
 import {RestaurantsService} from './restaurants/restaurants.service';
@@ -18,12 +17,15 @@ import { MenuItemComponent } from './restaurants-detail/menu-item/menu-item.comp
 import { ShoppingCartComponent } from './restaurants-detail/shopping-cart/shopping-cart.component';
 import { ReviewsComponent } from './restaurants-detail/reviews/reviews.component';
 import {ShoppingCartService} from './restaurants-detail/shopping-cart/shopping-cart.service';
-import { OrderComponent } from './order/order.component';
-import {FormsModule} from '@angular/forms';
-import { InputComponent } from './shared/input/input.component';
-import { RadioComponent } from './shared/radio/radio.component';
-import { OrderItemsComponent } from './order/order-items/order-items.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {OrderService} from './order/order.service';
+import { OrderSummaryComponent } from './order-summary/order-summary.component';
+import {SharedModule} from './shared/shared.module';
+import {OrderModule} from './order/order.module';
+import {HeaderService} from './header/header.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NotificationService} from './shared/messages/notification.service';
+
 
 
 @NgModule({
@@ -31,7 +33,6 @@ import {OrderService} from './order/order.service';
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    AboutComponent,
     RestaurantsComponent,
     RestaurantComponent,
     RestaurantsDetailComponent,
@@ -39,18 +40,18 @@ import {OrderService} from './order/order.service';
     MenuItemComponent,
     ShoppingCartComponent,
     ReviewsComponent,
-    OrderComponent,
-    InputComponent,
-    RadioComponent,
-    OrderItemsComponent
+    OrderSummaryComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     RouterModule.forRoot(ROUTES),
-    FormsModule
+    FormsModule,
+    SharedModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
-  providers: [RestaurantsService, ShoppingCartService, OrderService],
+  providers: [RestaurantsService, ShoppingCartService, OrderService, HeaderService, NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
