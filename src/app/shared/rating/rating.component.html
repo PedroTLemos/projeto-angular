@@ -1,0 +1,3 @@
+<p><i *ngFor="let r of rates" class="fa fa-star" [class.fa-star]="r <= rate" [class.fa-star-o]="r > rate"
+   (click)="setRate(r)" (mouseenter)="setTemporaryRating(r)" (mouseleave)="returnRating()"></i></p>
+<p><a class="btn btn-primary btn-lg" (click)="sendRating(rate)">Enviar</a></p>
